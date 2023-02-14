@@ -4,11 +4,15 @@ import { useState } from "react";
 import NextApp, { AppProps, AppContext } from "next/app";
 import { getCookie, setCookie } from "cookies-next";
 import Head from "next/head";
-import { MantineProvider, ColorScheme, ColorSchemeProvider } from "@mantine/core";
+import { MantineProvider, ColorScheme, ColorSchemeProvider, Global } from "@mantine/core";
 import { NotificationsProvider } from "@mantine/notifications";
+import { SWRConfig } from "swr";
+import { useColorScheme } from "@mantine/hooks";
+import { RouterTransition } from "../components/Loading/RouterTransision";
 
 export default function App(props: AppProps & { colorScheme: ColorScheme }) {
     const { Component, pageProps } = props;
+    const preferredColorScheme = useColorScheme();
     const [colorScheme, setColorScheme] = useState<ColorScheme>(props.colorScheme);
 
     const toggleColorScheme = (value?: ColorScheme) => {
@@ -25,13 +29,32 @@ export default function App(props: AppProps & { colorScheme: ColorScheme }) {
                 <link rel="shortcut icon" href="/favicon.svg" />
             </Head>
 
-            <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-                <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
-                    <NotificationsProvider>
-                        <Component {...pageProps} />
-                    </NotificationsProvider>
-                </MantineProvider>
-            </ColorSchemeProvider>
+            <SWRConfig
+                value={{
+                    fetcher: (...args) => fetch(...args).then((res) => res.json()),
+                }}>
+                <SessionProvider session={pageProps.session}>
+                    <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+                        <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
+                            <NotificationsProvider>
+                                <RouterTransition />
+                                <Component {...pageProps} />
+                                <Global
+                                    styles={(theme) => ({
+                                        "*, *::before, *::after": {
+                                            boxSizing: "border-box",
+                                        },
+
+                                        body: {
+                                            overflow: "hidden",
+                                        },
+                                    })}
+                                />
+                            </NotificationsProvider>
+                        </MantineProvider>
+                    </ColorSchemeProvider>
+                </SessionProvider>
+            </SWRConfig>
         </>
     );
 }
