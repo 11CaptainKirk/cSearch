@@ -1,66 +1,49 @@
-generator client {
-  provider = "prisma-client-js"
-}
-
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL") // Only needed when using a cloud provider that doesn't support the creation of new databases, like Heroku. Learn more: https://pris.ly/migrate-shadow
 }
 
-model Post {
-  id        Int     @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean @default(false)
-  author    User?   @relation(fields: [authorId], references: [id])
-  authorId  Int?
+generator client {
+  provider        = "prisma-client-js"
 }
 
 model Account {
-  id                 Int     @id @default(autoincrement())
-  userId             Int     @map("user_id")
+  id                 String  @id @default(cuid())
+  userId             String
   type               String
   provider           String
-  providerAccountId  String  @map("provider_account_id")
-  refresh_token      String?
-  access_token       String?
+  providerAccountId  String
+  refresh_token      String?  @db.Text
+  access_token       String?  @db.Text
   expires_at         Int?
   token_type         String?
   scope              String?
-  id_token           String?
+  id_token           String?  @db.Text
   session_state      String?
-  oauth_token_secret String?
-  oauth_token        String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
-  @@map("accounts")
 }
 
 model Session {
-  id           Int      @id @default(autoincrement())
-  sessionToken String   @unique @map("session_token")
-  userId       Int      @map("user_id")
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@map("sessions")
 }
 
 model User {
-  id            Int       @id @default(autoincrement())
+  id            String    @id @default(cuid())
   name          String?
   email         String?   @unique
-  emailVerified DateTime? @map("email_verified")
+  emailVerified DateTime?
   image         String?
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
-  posts         Post[]
   accounts      Account[]
   sessions      Session[]
-
-  @@map(name: "users")
+  parts         Part[]
 }
 
 model VerificationToken {
@@ -69,5 +52,22 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
-  @@map("verificationtokens")
+}
+
+model Part {
+  id        Int  @id @default(autoincrement())
+  name      String
+  quantity  Int?
+  user      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String?
+  dateAdded DateTime @default(now())
+  componentRank Int? @default(autoincrement())
+  componentId Int?
+  componentCategory ComponentType? @relation(fields: [componentId], references: [id], onDelete: Cascade)
+}
+
+model ComponentType {
+  id       Int   @id @default(autoincrement())
+  name      String
+  parts     Part[]
 }
