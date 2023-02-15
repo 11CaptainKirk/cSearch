@@ -9,7 +9,7 @@ export default function Login() {
         <Box>
             <Flex justify={"end"}>
                 {status === "loading" && (
-                    <Box style={{ width: 100 }}>
+                    <Box style={{ width: 150 }}>
                         <Center>
                             <Loader scale="xl" variant="dots" />
                         </Center>
@@ -17,7 +17,7 @@ export default function Login() {
                 )}
                 {status === "unauthenticated" && (
                     <UnstyledButton onClick={() => signIn()}>
-                        <Badge style={{ width: 100 }} variant="gradient" gradient={{ from: "indigo", to: "cyan", deg: 45 }} size="lg">
+                        <Badge style={{ width: 150 }} variant="gradient" gradient={{ from: "indigo", to: "cyan", deg: 45 }} size="lg">
                             SIGN IN
                         </Badge>
                     </UnstyledButton>
@@ -27,7 +27,7 @@ export default function Login() {
                         <UnstyledButton onClick={() => signOut()}>
                             <Badge
                                 sx={{
-                                    maxWidth: 200,
+                                    width: 150,
                                 }}
                                 variant="gradient"
                                 size="lg">
