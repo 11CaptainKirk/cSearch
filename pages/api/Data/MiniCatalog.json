@@ -1,0 +1,152 @@
+[
+    {
+        "Type": "Basic Part",
+        "Part #": "C25725",
+        "Comment": "10KΩ (103) ±5%",
+        "MPN": "4D02WGJ0103TCE",
+        "Package": "0402_x4",
+        "Category": "Resistor Networks & Arrays",
+        "Manufacturer": "Uniroyal Elec",
+        "Description": "Resistor Networks & Arrays 10KOhms ±5% 1/16W 0402_x4 RoHS"
+    },
+    {
+        "Type": "Basic Part",
+        "Part #": "C25726",
+        "Comment": "1KΩ (102) ±5%",
+        "MPN": "4D02WGJ0102TCE",
+        "Package": "0402_x4",
+        "Category": "Resistor Networks & Arrays",
+        "Manufacturer": "Uniroyal Elec",
+        "Description": "Resistor Networks & Arrays 1KOhms ±5% 1/16W 0402_x4 RoHS"
+    },
+    {
+        "Type": "Basic Part",
+        "Part #": "C25501",
+        "Comment": "33Ω (330) ±5%",
+        "MPN": "4D02WGJ0330TCE",
+        "Package": "0402_x4",
+        "Category": "Resistor Networks & Arrays",
+        "Manufacturer": "Uniroyal Elec",
+        "Description": "Resistor Networks & Arrays 33Ohms ±5% 1/16W 0402_x4 RoHS"
+    },
+    {
+        "Type": "Basic Part",
+        "Part #": "C25510",
+        "Comment": "470Ω (471) ±5%",
+        "MPN": "4D03WGJ0471T5E",
+        "Package": "0603_x4",
+        "Category": "Resistor Networks & Arrays",
+        "Manufacturer": "Uniroyal Elec",
+        "Description": "Resistor Networks & Arrays 470Ohms ±5% 1/16W 0603_x4 RoHS"
+    },
+    {
+        "Type": "Basic Part",
+        "Part #": "C29718",
+        "Comment": "10KΩ (103) ±5%",
+        "MPN": "4D03WGJ0103T5E",
+        "Package": "0603_x4",
+        "Category": "Resistor Networks & Arrays",
+        "Manufacturer": "Uniroyal Elec",
+        "Description": "Resistor Networks & Arrays 10KOhms ±5% 1/16W 0603_x4 RoHS"
+    },
+    {
+        "Type": "Basic Part",
+        "Part #": "C20197",
+        "Comment": "1KΩ (102) ±5%",
+        "MPN": "4D03WGJ0102T5E",
+        "Package": "0603_x4",
+        "Category": "Resistor Networks & Arrays",
+        "Manufacturer": "Uniroyal Elec",
+        "Description": "Resistor Networks & Arrays 1KOhms ±5% 1/16W 0603_x4 RoHS"
+    },
+    {
+        "Type": "Basic Part",
+        "Part #": "C1980",
+        "Comment": "4.7KΩ (472) ±5%",
+        "MPN": "4D03WGJ0472T5E",
+        "Package": "0603_x4",
+        "Category": "Resistor Networks & Arrays",
+        "Manufacturer": "Uniroyal Elec",
+        "Description": "Resistor Networks & Arrays 4.7KOhms ±5% 1/16W 0603_x4 RoHS"
+    },
+    {
+        "Type": "Extended Part",
+        "Part #": "C1952",
+        "Comment": "0Ω (0R0) ±5%",
+        "MPN": "4D03WGJ0000T5E",
+        "Package": "0603_x4",
+        "Category": "Resistor Networks & Arrays",
+        "Manufacturer": "Uniroyal Elec",
+        "Description": "Resistor Networks & Arrays 0Ohms ±5% 1/16W 0603_x4 RoHS"
+    },
+    {
+        "Type": "Extended Part",
+        "Part #": "C1959",
+        "Comment": "30Ω (300) ±5%",
+        "MPN": "RC-ML08W300JT",
+        "Package": "0603_x4",
+        "Category": "Resistor Networks & Arrays",
+        "Manufacturer": "Guangdong Fenghua Advanced Tech",
+        "Description": "Resistor Networks & Arrays 30Ohms ±5% 1/16W 0603_x4"
+    },
+    {
+        "Type": "Extended Part",
+        "Part #": "C1973",
+        "Comment": "1.5KΩ (152) ±5%",
+        "MPN": "RC-ML08W152JT",
+        "Package": "0603_x4",
+        "Category": "Resistor Networks & Arrays",
+        "Manufacturer": "Guangdong Fenghua Advanced Tech",
+        "Description": "Resistor Networks & Arrays 1.5KOhms ±5% 1/16W 0603_x4 RoHS"
+    },
+    {
+        "Type": "Extended Part",
+        "Part #": "C1977",
+        "Comment": "3KΩ (302) ±5%",
+        "MPN": "RC-ML08W302JT",
+        "Package": "0603_x4",
+        "Category": "Resistor Networks & Arrays",
+        "Manufacturer": "Guangdong Fenghua Advanced Tech",
+        "Description": "Resistor Networks & Arrays 3KOhms ±5% 1/16W 0603_x4"
+    },
+    {
+        "Type": "Extended Part",
+        "Part #": "C1983",
+        "Comment": "6.8KΩ (682) ±5%",
+        "MPN": "RC-ML08W682JT",
+        "Package": "0603_x4",
+        "Category": "Resistor Networks & Arrays",
+        "Manufacturer": "Guangdong Fenghua Advanced Tech",
+        "Description": "Resistor Networks & Arrays 6.8KOhms ±5% 1/16W 0603_x4"
+    },
+    {
+        "Type": "Extended Part",
+        "Part #": "C1990",
+        "Comment": "30KΩ (303) ±5%",
+        "MPN": "RTA03-4D303JTP",
+        "Package": "0603_x4",
+        "Category": "Resistor Networks & Arrays",
+        "Manufacturer": "RALEC",
+        "Description": "Resistor Networks & Arrays 30KOhms ±5% 1/16W 0603_x4"
+    },
+    {
+        "Type": "Extended Part",
+        "Part #": "C1996",
+        "Comment": "100KΩ (104) ±5%",
+        "MPN": "4D03WGJ0104T5E",
+        "Package": "0603_x4",
+        "Category": "Resistor Networks & Arrays",
+        "Manufacturer": "Uniroyal Elec",
+        "Description": "Resistor Networks & Arrays 100KOhms ±5% 1/16W 0603_x4 RoHS"
+    },
+    {
+        "Type": "Extended Part",
+        "Part #": "C2002",
+        "Comment": "3Ω (3R0) ±5%",
+        "MPN": "RC-MT08W3R0JT",
+        "Package": "0402_x4",
+        "Category": "Resistor Networks & Arrays",
+        "Manufacturer": "Guangdong Fenghua Advanced Tech",
+        "Description": "Resistor Networks & Arrays 3Ohms ±5% 1/16W 0402_x4"
+    }
+]
