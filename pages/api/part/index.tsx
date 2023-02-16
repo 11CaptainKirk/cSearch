@@ -1,10 +1,14 @@
 import { Part } from "@prisma/client";
 
 export default async function handler(req, res) {
-    const { category } = req.body;
+    const numResults = req.query["number"];
+    const order = req.query["order"];
+    //console.log(number);
     const result: Part[] = await prisma.part.findMany({
+        take: Number(numResults),
         orderBy: {
-            id: "asc",
+            rank: "desc",
+            //quantity: "desc",
         },
         include: {
             user: true,
