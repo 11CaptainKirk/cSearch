@@ -41,9 +41,23 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  role          Role      @default(USER)
+  library       Library[]
   accounts      Account[]
   sessions      Session[]
   parts         Part[]
+}
+
+model Library {
+  id        Int  @id @default(autoincrement())
+  name      String
+  parts     Part[]
+  user      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String?
+  dateAdded DateTime @default(now())
+  rank Int? @default(0)
+
+  @@unique([name, userId]) // make sure the user has only one library with a given name
 }
 
 model VerificationToken {
@@ -54,20 +68,58 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
+
 model Part {
   id        Int  @id @default(autoincrement())
   name      String
   quantity  Int?
+  JLCPartNumber String?
+  Supplier  Supplier?
   user      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String?
+  prices    Price[]
+  parameter Parameter[]
   dateAdded DateTime @default(now())
-  componentRank Int? @default(autoincrement())
+  dateUpdated DateTime @updatedAt
+  library Library[] 
+  rank Int? @default(0)
   componentId Int?
   componentCategory ComponentType? @relation(fields: [componentId], references: [id], onDelete: Cascade)
+}
+
+model Price {
+  id        Int  @id @default(autoincrement())
+  partId    Int
+  part      Part @relation(fields: [partId], references: [id], onDelete: Cascade)
+  price     Int
+  quantity  Int
+  Supplier  String
+  dateUpdated DateTime @updatedAt
+}
+
+model Parameter {
+  id        Int  @id @default(autoincrement())
+  name      String
+  value     String
+  partId    Int
+  part      Part @relation(fields: [partId], references: [id], onDelete: Cascade)
 }
 
 model ComponentType {
   id       Int   @id @default(autoincrement())
   name      String
   parts     Part[]
+}
+
+enum Supplier {
+  JLC_BASIC
+  JLC_EXTENDED
+  MOUSER
+  DIGIKEY
+  EXTERNAL
+}
+
+enum Role {
+  USER
+  ADMIN
 }
