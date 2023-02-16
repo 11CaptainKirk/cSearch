@@ -5,8 +5,7 @@ import JLC_Catalog from "../Data/JLC_Catalog.json";
 export default async function handler(req, res) {
     const partNumber = req.query["partNumber"];
     let partName = "Not Found";
-    console.log(JLC_Catalog);
-    // @ts-ignore
+    // @ts-expect-error
     JLC_Catalog.forEach((part) => {
         if (part["Part #"] === partNumber) {
             partName = part["Comment"];
