@@ -27,7 +27,7 @@ const AboutPart = ({ parts }) => {
     }*/
     //const userHasValidSession = Boolean(session);
     //const postBelongsToUser = session?.user?.email === props.author?.email;
-    console.log(parts[0].name);
+    //console.log(parts[0].name);
     const x = parts.map((part) => <Title>{part.name}</Title>);
     return (
         <>
