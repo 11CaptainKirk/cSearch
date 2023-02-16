@@ -24,14 +24,16 @@ export default function App(props: AppProps & { colorScheme: ColorScheme }) {
     return (
         <>
             <Head>
-                <title>Mantine next example</title>
+                <title>JLC Search</title>
                 <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
                 <link rel="shortcut icon" href="/favicon.svg" />
             </Head>
 
             <SWRConfig
                 value={{
-                    fetcher: (...args) => fetch(...args).then((res) => res.json()),
+                    // @ts-expect-error
+                    fetcher: (...args) => fetch(...args).then((res) => res.json()), // second ...args causes error
+
                 }}>
                 <SessionProvider session={pageProps.session}>
                     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
