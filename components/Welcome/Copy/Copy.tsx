@@ -4,20 +4,30 @@ import { CopyButton, Tooltip, ActionIcon, Button } from "@mantine/core";
 import { useClipboard } from "@mantine/hooks";
 import { IconCopy, IconCheck } from "@tabler/icons";
 
-export default function Copy({ children, copyText }) {
+export default function Copy({ children, id }) {
     const clipboard = useClipboard();
     return (
         <Button
             variant="light"
             fullWidth
-            rightIcon={clipboard.copied ? <IconCheck size={20} stroke={1.5} /> : <IconCopy size={20} stroke={1.5} />}
+            rightIcon={clipboard.copied ? <IconCheck size={20} /> : <IconCopy size={20} />}
             radius="xl"
             size="md"
             styles={{
-                root: { paddingRight: 14, height: 28 },
-                rightIcon: { marginLeft: 22 },
+                root: { height: 28 },
             }}
-            onClick={() => clipboard.copy(children)}>
+            onClick={async () => {
+                clipboard.copy(children);
+                const res = await fetch("/api/part/rank", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        id: id,
+                    }),
+                });
+            }}>
             {children}
         </Button>
     );
