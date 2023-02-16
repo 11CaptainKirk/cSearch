@@ -7,7 +7,7 @@ export default function AddLibrary({ partName }) {
         <Menu shadow="md" width={250} withArrow>
             <Menu.Target>
                 <ActionIcon color={"blue"}>
-                    <IconBookDownload />
+                    <IconBook />
                 </ActionIcon>
             </Menu.Target>
 

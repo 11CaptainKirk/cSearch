@@ -29,7 +29,7 @@ export default function CreatePart() {
         { value: "Inductor", label: "Inductor" },
         { value: "Diode", label: "Diode" },
     ];
-    console.log(data);
+    //console.log(data);
     const form = useForm({
         initialValues: {
             partNum: "",
