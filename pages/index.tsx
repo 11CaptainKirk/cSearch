@@ -11,6 +11,7 @@ import CreatePart from "../components/Welcome/CreatePart/CreatePart";
 import { Part } from "@prisma/client";
 import HeaderCmp from "../components/Header/HeaderCmp";
 import FileLoad from "../components/FileLoad/FileLoad";
+import Filter from "../components/Filter/Filter";
 
 const preData = [];
 for (let i = 0; i < 100; i++) {
@@ -28,28 +29,10 @@ export default function HomePage() {
             <HeaderCmp />
 
             <Flex justify="center" direction="row" gap="xl">
+                <Filter />
                 <CreateType />
                 <CreatePart />
                 <FileLoad />
-
-                <Box
-                    component="a"
-                    sx={{
-                        color: "white",
-                        height: 50,
-                        fontSize: 0.01,
-                        margin: -12,
-                        transition: "all 0.3s ease-in-out",
-                        ":hover": {
-                            color: "red",
-                            fontSize: 80,
-                            transition: "all 0.3s ease-in-out",
-                        },
-                    }}
-                    href="https://www.youtube.com/watch?v=3aR993bmzIY"
-                    target="_Blank">
-                    Super Secret Button
-                </Box>
 
                 <Link href={"/part/1"}>
                     <Button>Test</Button>
