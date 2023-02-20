@@ -14,6 +14,7 @@ export default async function handler(req, res) {
             user: true,
         },
     });
-    console.log(result);
+
+    console.log("WOW" + result[0].imageURL);
     res.json(result);
 }
