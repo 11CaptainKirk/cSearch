@@ -77,10 +77,12 @@ model Part {
   Supplier  Supplier?
   user      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String?
+  imageURL    String?
+  packageType String?
   prices    Price[]
   parameter Parameter[]
   dateAdded DateTime @default(now())
-  dateUpdated DateTime @updatedAt
+  dateUpdated DateTime @default(now()) @updatedAt
   library Library[] 
   rank Int? @default(0)
   componentId Int?
