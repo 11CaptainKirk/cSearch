@@ -2,6 +2,7 @@ import useStyles from "./ComponentTable.styles";
 import { useSession } from "next-auth/react";
 
 import styled from "@emotion/styled";
+import Image from "next/image";
 import { Suspense, useEffect, useState } from "react";
 import {
     createStyles,
@@ -32,6 +33,7 @@ import Favorite from "./Menu/Favorite";
 import AddLibrary from "./Menu/AddLibrary";
 import DownloadPart from "./Menu/DownloadPart";
 import useSwr from "swr";
+import Filter from "../Filter/Filter";
 import { useTimeout } from "@mantine/hooks";
 
 const CardFancy = styled.div`
@@ -51,6 +53,17 @@ const CardFancy = styled.div`
 const fetcherWithArgs = ({ url, args }) => fetch(url, args).then((res) => res.json().catch((err) => console.error(err))); // second ...args causes error
 
 function Row({ data, loading, favorite }: { data: Part | any; loading: boolean; favorite: any }) {
+    const PartImage = styled(Image)({
+        borderRadius: 10,
+        transition: "all 0.3s ease-in-out",
+        margin: -0,
+        filter: "invert(0)",
+        "&:hover": {
+            transform: "scale(3) translate(10px, 20px)",
+            transition: "all 0.3s ease-in-out",
+        },
+    });
+
     // refactor this
     let thisPartisFavorite = false;
     useEffect(() => {
@@ -63,8 +76,26 @@ function Row({ data, loading, favorite }: { data: Part | any; loading: boolean; 
     let stockLoading = false;
     colorX = data.quantity == undefined ? "gray" : data.quantity > 500 ? "green" : data.quantity > 100 ? "yellow" : data.quantity > 10 ? "orange" : "red";
     stockLoading = data.quantity < 300 ? true : false; // temporary for testing !WOW
+
+    console.log(data.imageURL);
     return (
-        <Grid columns={18} grow gutter={15}>
+        <Grid columns={20} grow gutter={15}>
+            <Grid.Col span={2}>
+                <Skeleton visible={loading} p={5} radius="md">
+                    <Box sx={{ margin: -10 }}>
+                        {data != undefined ? (
+                            <PartImage
+                                src={data?.imageURL || "https://assets.lcsc.com/images/lcsc/900x900/20180914_MDD-Microdiode-Electronics--MB10S_C2488_front.jpg"}
+                                width={80}
+                                height={80}
+                                alt={"wow"}
+                            />
+                        ) : (
+                            "Loading..."
+                        )}
+                    </Box>
+                </Skeleton>
+            </Grid.Col>
             <Grid.Col span={5}>
                 <Skeleton visible={loading} p={5} radius="md">
                     <Text weight={600} size="lg" color="dark-gray">
@@ -91,9 +122,9 @@ function Row({ data, loading, favorite }: { data: Part | any; loading: boolean; 
                 </Skeleton>
             </Grid.Col>
 
-            <Grid.Col span={1}>
-                <Skeleton visible={loading} radius="md" p={5} width={20}>
-                    <Text>{data.rank != undefined ? data.rank : "Loading..."}</Text>
+            <Grid.Col span={2}>
+                <Skeleton visible={loading} radius="md" p={5} width={60}>
+                    <Text>{data.packageType != undefined ? data.packageType : "Loading..."}</Text>
                 </Skeleton>
             </Grid.Col>
             <Grid.Col span={3}>
@@ -131,6 +162,13 @@ function TableHead() {
             <CardFancy>
                 <Center>
                     <Grid columns={18} sx={{ width: "100%", padding: 10 }} grow gutter={15}>
+                        <Grid.Col span={2}>
+                            <Box>
+                                <Title order={4} color="blue">
+                                    Image
+                                </Title>
+                            </Box>
+                        </Grid.Col>
                         <Grid.Col span={5}>
                             <Box>
                                 <Title order={4} color="blue">
@@ -148,9 +186,9 @@ function TableHead() {
                                 Stock
                             </Title>
                         </Grid.Col>
-                        <Grid.Col span={1}>
+                        <Grid.Col span={2}>
                             <Title order={4} color="blue">
-                                Rank
+                                Package
                             </Title>
                         </Grid.Col>
                         <Grid.Col span={3}>
@@ -176,7 +214,7 @@ export function ComponentTable({ data }) {
     rows =
         data != undefined
             ? data.map((item: Part) => (
-                  <Flex direction="column" sx={{ width: "100%" }}>
+                  <Flex key={item.id} direction="column" sx={{ width: "100%" }}>
                       <Row key={item.id} data={item} loading={loading} favorite={favoriteData.data} />
                       <Space h="xs" />
                       <Divider />

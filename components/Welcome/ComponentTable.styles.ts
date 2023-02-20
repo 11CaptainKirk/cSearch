@@ -20,4 +20,11 @@ export default createStyles((theme) => ({
     scrolled: {
         boxShadow: theme.shadows.sm,
     },
+
+    image: {
+        borderRadius: 10,
+        "&::hover": {
+            transform: "scale(2)",
+        },
+    },
 }));
