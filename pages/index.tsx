@@ -12,41 +12,14 @@ import { Part } from "@prisma/client";
 import HeaderCmp from "../components/Header/HeaderCmp";
 import FileLoad from "../components/FileLoad/FileLoad";
 import Filter from "../components/Filter/Filter";
-
-const preData = [];
-for (let i = 0; i < 100; i++) {
-    preData.push({});
-}
+import Data from "../components/Data/Data";
 
 export default function HomePage() {
-    let retData;
-    let numResults = 30;
-    const { data, error, isLoading } = useSwr(`/api/part?number=${numResults}`, { refreshInterval: 1000 });
-    retData = data;
     //console.log(data);
     return (
         <Box sx={{ overflow: "hidden" }}>
             <HeaderCmp />
-
-            <Flex justify="center" direction="row" gap="xl">
-                <Filter />
-                <CreateType />
-                <CreatePart />
-                <FileLoad />
-
-                <Link href={"/part/1"}>
-                    <Button>Test</Button>
-                </Link>
-            </Flex>
-            <Space h="xl" />
-            <ComponentTable data={retData != undefined ? retData : preData} />
-            <Button
-                onClick={() => {
-                    numResults += 10;
-                }}>
-                More Options
-            </Button>
-            <Box sx={{ height: 100 }} />
+            <Data />
         </Box>
     );
 }
