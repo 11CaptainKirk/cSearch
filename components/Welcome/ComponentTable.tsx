@@ -25,6 +25,8 @@ import {
     Divider,
     Stack,
     Card,
+    Button,
+    Modal,
 } from "@mantine/core";
 import Copy from "./Copy/Copy";
 import MenuDots from "./Menu/MenuDots";
@@ -58,10 +60,10 @@ function Row({ data, loading, favorite }: { data: Part | any; loading: boolean; 
         transition: "all 0.3s ease-in-out",
         margin: -0,
         filter: "invert(0)",
-        "&:hover": {
+        /*"&:hover": {
             transform: "scale(3) translate(10px, 20px)",
             transition: "all 0.3s ease-in-out",
-        },
+        },*/
     });
 
     // refactor this
@@ -76,83 +78,95 @@ function Row({ data, loading, favorite }: { data: Part | any; loading: boolean; 
     let stockLoading = false;
     colorX = data.quantity == undefined ? "gray" : data.quantity > 500 ? "green" : data.quantity > 100 ? "yellow" : data.quantity > 10 ? "orange" : "red";
     stockLoading = data.quantity < 300 ? true : false; // temporary for testing !WOW
-
+    const [largeImg, setLargeImg] = useState(false);
     console.log(data.imageURL);
     return (
-        <Grid columns={20} grow gutter={15}>
-            <Grid.Col span={2}>
-                <Skeleton visible={loading} p={5} radius="md">
-                    <Box sx={{ margin: -10 }}>
-                        {data != undefined ? (
-                            <PartImage
-                                src={data?.imageURL || "https://assets.lcsc.com/images/lcsc/900x900/20180914_MDD-Microdiode-Electronics--MB10S_C2488_front.jpg"}
-                                width={80}
-                                height={80}
-                                alt={"wow"}
-                            />
-                        ) : (
-                            "Loading..."
-                        )}
-                    </Box>
-                </Skeleton>
-            </Grid.Col>
-            <Grid.Col span={5}>
-                <Skeleton visible={loading} p={5} radius="md">
-                    <Text weight={600} size="lg" color="dark-gray">
-                        {data.name != undefined ? data.name : "Loading..."}
-                    </Text>
-                </Skeleton>
-            </Grid.Col>
-            <Grid.Col span={2}>
-                <Skeleton visible={loading} radius="md" p={5} width={"100%"}>
-                    <Copy id={data.id}>
-                        <Text>{data.JLCPartNumber}</Text>
-                    </Copy>
-                </Skeleton>
-            </Grid.Col>
-            <Grid.Col span={1}>
-                <Skeleton visible={loading} radius="md" p={5} width={90}>
-                    <Flex direction="row">
-                        <Text size="md" weight={800} color={colorX}>
-                            {data.quantity != undefined ? data.quantity : "?"}
+        <>
+            <Grid columns={20} grow gutter={15}>
+                <Grid.Col span={2}>
+                    <Skeleton visible={loading} p={5} radius="md">
+                        <Box sx={{ margin: -10 }}>
+                            {data != undefined ? (
+                                <Box onMouseEnter={() => setLargeImg(true)}>
+                                    <PartImage
+                                        src={data?.imageURL || "https://assets.lcsc.com/images/lcsc/96x96/20180914_MDD-Microdiode-Electronics--MB10S_C2488_front.jpg"}
+                                        width={80}
+                                        height={80}
+                                        alt={"wow"}
+                                    />
+                                </Box>
+                            ) : (
+                                "Loading..."
+                            )}
+                        </Box>
+                    </Skeleton>
+                </Grid.Col>
+                <Grid.Col span={5}>
+                    <Skeleton visible={loading} p={5} radius="md">
+                        <Text weight={600} size="lg" color="dark-gray">
+                            {data.name != undefined ? data.name : "Loading..."}
                         </Text>
-                        <Space w="xs" />
-                        <Center>{stockLoading && <Loader variant="oval" color={colorX} size={13} />}</Center>
-                    </Flex>
-                </Skeleton>
-            </Grid.Col>
+                    </Skeleton>
+                </Grid.Col>
+                <Grid.Col span={2}>
+                    <Skeleton visible={loading} radius="md" p={5} width={"100%"}>
+                        <Copy id={data.id}>
+                            <Text>{data.JLCPartNumber}</Text>
+                        </Copy>
+                    </Skeleton>
+                </Grid.Col>
+                <Grid.Col span={1}>
+                    <Skeleton visible={loading} radius="md" p={5} width={90}>
+                        <Flex direction="row">
+                            <Text size="md" weight={800} color={colorX}>
+                                {data.quantity != undefined ? data.quantity : "?"}
+                            </Text>
+                            <Space w="xs" />
+                            <Center>{stockLoading && <Loader variant="oval" color={colorX} size={13} />}</Center>
+                        </Flex>
+                    </Skeleton>
+                </Grid.Col>
 
-            <Grid.Col span={2}>
-                <Skeleton visible={loading} radius="md" p={5} width={60}>
-                    <Text>{data.packageType != undefined ? data.packageType : "Loading..."}</Text>
-                </Skeleton>
-            </Grid.Col>
-            <Grid.Col span={3}>
-                <Group style={{ justifyContent: "end" }}>
-                    <DownloadPart />
-                    <AddLibrary partName={data.name} />
-                    <Favorite
-                        favorite={isFavorite}
-                        setFavorite={async (fav) => {
-                            setFavorite(fav);
-                            const res = await fetch(`/api/library/favorite/`, {
-                                method: "POST",
-                                headers: {
-                                    "Content-Type": "application/json",
-                                },
-                                body: JSON.stringify({
-                                    userId: "cle2h78am000inqd6ery6eick",
-                                    isFavorite: fav,
-                                    partId: data.id,
-                                }),
-                            });
-                            console.log(res);
-                        }}
-                    />
-                    <MenuDots partName={data.name} partCreator={data?.user?.name} editDate={data?.dateAdded} />
-                </Group>
-            </Grid.Col>
-        </Grid>
+                <Grid.Col span={2}>
+                    <Skeleton visible={loading} radius="md" p={5} width={60}>
+                        <Text>{data.packageType != undefined ? data.packageType : "Loading..."}</Text>
+                    </Skeleton>
+                </Grid.Col>
+                <Grid.Col span={3}>
+                    <Group style={{ justifyContent: "end" }}>
+                        <DownloadPart />
+                        <AddLibrary partName={data.name} />
+                        <Favorite
+                            favorite={isFavorite}
+                            setFavorite={async (fav) => {
+                                setFavorite(fav);
+                                const res = await fetch(`/api/library/favorite/`, {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                    },
+                                    body: JSON.stringify({
+                                        userId: "cle2h78am000inqd6ery6eick",
+                                        isFavorite: fav,
+                                        partId: data.id,
+                                    }),
+                                });
+                                console.log(res);
+                            }}
+                        />
+                        <MenuDots partName={data.name} partCreator={data?.user?.name} editDate={data?.dateAdded} />
+                    </Group>
+                </Grid.Col>
+            </Grid>
+            <Modal opened={largeImg} onClose={() => setLargeImg(false)}>
+                <PartImage
+                    src={data?.imageURL || "https://assets.lcsc.com/images/lcsc/900x900/20180914_MDD-Microdiode-Electronics--MB10S_C2488_front.jpg"}
+                    width={400}
+                    height={400}
+                    alt={"wow"}
+                />
+            </Modal>
+        </>
     );
 }
 
@@ -201,7 +215,7 @@ function TableHead() {
     );
 }
 
-export function ComponentTable({ data }) {
+export function ComponentTable({ data, isLoading }) {
     const { data: session } = useSession();
     const user = useSwr(`/api/auth/userId?email=${session?.user.email}`);
 
@@ -223,12 +237,13 @@ export function ComponentTable({ data }) {
               ))
             : null;
     useEffect(() => {
-        if (data != undefined) {
+        /*if (data != undefined) {
             setTimeout(() => {
                 setLoading(false);
             }, 600);
-        }
-    }, [data]);
+        }*/
+        setLoading(isLoading);
+    }, [isLoading]);
 
     return (
         <>
